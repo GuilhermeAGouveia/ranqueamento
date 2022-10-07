@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <bits/stdc++.h>
-#define DEBUG(x) 
+#define DEBUG(x)
 
 using namespace std;
 
@@ -53,20 +53,13 @@ team createTeam(int teamId)
 
 bool compareTeams(team t1, team t2)
 {
-	if (t1.nProblems < t2.nProblems)
-		return true;
-	else if (t1.nProblems == t2.nProblems)
+	if (t1.nProblems == t2.nProblems)
 	{
-		if (t1.time > t2.time)
-			return true;
-		else if (t1.time == t2.time)
-		{
-			if (t1.teamId > t2.teamId)
-				return true;
-		}
+		if (t1.time == t2.time)
+			return t1.teamId > t2.teamId;
+		return t1.time > t2.time;
 	}
-
-	return false;
+	return t1.nProblems < t2.nProblems;
 }
 
 priority_queue<team, vector<team>, function<bool(team, team)>> createRankingQueue()
@@ -121,7 +114,6 @@ void ranqueamento(vector<submission> submissions)
 	}
 
 	printf("\n");
-
 }
 
 int main()
