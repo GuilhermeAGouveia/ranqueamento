@@ -71,7 +71,9 @@ void ranqueamento(vector<submission> submissions)
 {
 	vector<team> rank;
 	int problems[900];
+	int penalty[900];
 	clearProblem(problems, 900);
+	clearProblem(penalty, 900);
 	int teamIndex;
 	for (auto s : submissions)
 	{
@@ -86,16 +88,16 @@ void ranqueamento(vector<submission> submissions)
 
 		if (s.status == 'C')
 		{
-			if (!problems[s.teamId * 9 + s.problemId])
+			if (!problems[(s.teamId - 1) * 9 + s.problemId])
 			{
-				problems[s.teamId * 9 + s.problemId] = 1;
-				rank.at(teamIndex).time += s.time;
+				problems[(s.teamId - 1) * 9 + s.problemId] = 1;
+				rank.at(teamIndex).time += s.time + penalty[(s.teamId - 1) * 9 + s.problemId];
 				rank.at(teamIndex).nProblems += 1;
 			}
 		}
 		else if (s.status == 'I')
 		{
-			rank.at(teamIndex).time += 20;
+			penalty[(s.teamId - 1) * 9 + s.problemId] += 20;
 		}
 	}
 
